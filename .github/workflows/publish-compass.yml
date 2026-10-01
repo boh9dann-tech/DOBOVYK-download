@@ -20,3 +20,5 @@ jobs:
           git add DOBOVYK-1.4-live.apk
           git commit -m "Publish DOBOVYK compass fallback build"
           git push
+
+# trigger
