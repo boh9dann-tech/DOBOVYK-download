@@ -25,3 +25,5 @@ jobs:
           git add DOBOVYK-1.4-live.apk
           git commit -m "Publish DOBOVYK 1.4 APK" || exit 0
           git push
+
+# trigger publish
