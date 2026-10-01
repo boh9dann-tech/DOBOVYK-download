@@ -1,0 +1,22 @@
+name: Publish compass fallback APK
+on:
+  push:
+    paths: ['.github/workflows/publish-compass.yml']
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -L --fail 'https://sdmntprnortheu.oaiusercontent.com/files/00000000-0f50-81f4-bc82-6808634e5340/raw?se=2026-10-01T20%3A34%3A41Z&sp=r&sv=2026-02-06&sr=b&scid=9af2e85f-966d-5227-9ca9-102c941caa43&skoid=3804227d-1b52-417d-afd9-9ffbb50fa53e&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-10-01T18%3A18%3A55Z&ske=2026-10-02T18%3A18%3A55Z&sks=b&skv=2026-02-06&sig=v0GEft5PY10VXykC2JpBO85MKGViR/OD4hPefPeZMrs%3D' -o artifact.zip
+          unzip -o artifact.zip -d artifact
+          APK="$(find artifact -type f -name '*.apk' | head -1)"
+          test -n "$APK"
+          cp "$APK" DOBOVYK-1.4-live.apk
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add DOBOVYK-1.4-live.apk
+          git commit -m "Publish DOBOVYK compass fallback build"
+          git push
